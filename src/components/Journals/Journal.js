@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
@@ -6,13 +7,13 @@ import JournalList from './JournalList';
 // import useFetch from './useFetch';
 import { JContainer, Head, Search, SearchTerm, SearchButton, Container } from './styles';
 
-const Journal = ({ posts, search, postsPerPage, totalPosts, paginate, dispatch }) => {
+const Journal = ({ posts }) => {
   return (
     <Container>
       <JContainer>
         <Head>Journals</Head>
         <form onSubmit={(e) => e.preventDefault()}>
-          <Search>
+          {/* <Search>
             <SearchTerm
               id='search'
               type='text'
@@ -23,13 +24,13 @@ const Journal = ({ posts, search, postsPerPage, totalPosts, paginate, dispatch }
             <SearchButton type='submit'>
               <FiSearch />
             </SearchButton>
-          </Search>
+          </Search> */}
         </form>
         <JournalList
-          posts={posts}
-          postsPerPage={postsPerPage}
-          totalPosts={totalPosts}
-          paginate={paginate}
+        // posts={posts}
+        // postsPerPage={postsPerPage}
+        // totalPosts={totalPosts}
+        // paginate={paginate}
         />
       </JContainer>
     </Container>

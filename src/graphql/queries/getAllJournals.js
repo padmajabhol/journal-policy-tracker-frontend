@@ -5,23 +5,11 @@ const GET_ALL_JOURNALS = gql`
     getAllJournals(currentPageNumber: $currentPageNumber, limitValue: $limitValue) {
       id
       title
-      url
       issn
       domainName
       createdAt
       updatedAt
       createdBy
-      policies {
-        title
-        firstYear
-        lastYear
-        policyType
-        isDataAvailabilityStatementPublished
-        isDataShared
-        isDataPeerReviewed
-        enforced
-        enforcedEvidence
-      }
     }
   }
 `;

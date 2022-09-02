@@ -92,13 +92,15 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  const { data } = useQuery(query, {
-    variables: { currentPageNumber: 1, limitValue: 10 },
-  });
+  // const { data } = useQuery(query, {
+  //   variables: { currentPageNumber: 1, limitValue: 10 },
+  // });
 
-  console.log(data);
+  // console.log(data);
 
-  // const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:3500/journals');
+  // const { data1, fetchError, isLoading } = useAxiosFetch('http://localhost:3500/journals');
+  // console.log(typeof data1);
+  // console.log({ data1 });
 
   // useEffect(() => {
   //   dispatch({ type: 'POSTS', payload: data });
