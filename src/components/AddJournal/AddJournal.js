@@ -40,10 +40,12 @@ const AddJournal = () => {
   const [dataavail, setDataavail] = useState(false);
   const [datashared, setDatashared] = useState(false);
   const [peerreview, setPeerreview] = useState(false);
-  const [enforced, setEnforced] = useState('');
+  const [enforced, setEnforced] = useState('YES');
   const [evidence, setEvidence] = useState('');
   const [policyTitle, setPolicyTitle] = useState('');
-  // const [firstYear] = useState(2000);
+  const [firstYear, setFirstYear] = useState();
+
+  console.log({ typeFY: typeof firstYear });
 
   const [createJournal, { data, error }] = useMutation(CREATE_JOURNAL);
 
@@ -67,7 +69,7 @@ const AddJournal = () => {
             isDataAvailabilityStatementPublished: dataavail,
             isDataShared: datashared,
             isDataPeerReviewed: peerreview,
-            firstYear: 2000,
+            firstYear,
           },
         },
       },
@@ -148,15 +150,15 @@ const AddJournal = () => {
           </Subhead>
           <Div>
             <SecondDiv>
-              {/* <div>
+              <div>
                 <Label>First Year</Label>
                 <Input
-                  type='text'
+                  type='number'
                   required
-                  value={policyTitle}
-                  onChange={(e) => setPolicyTitle(e.target.value)}
+                  value={firstYear}
+                  onChange={(e) => setFirstYear(parseInt(e.target.value, 10))}
                 />
-              </div> */}
+              </div>
               <div>
                 <Label>Policy Title</Label>
                 <Input

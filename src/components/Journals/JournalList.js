@@ -4,7 +4,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { FiSearch } from 'react-icons/fi';
@@ -32,32 +32,25 @@ const JournalList = () => {
     postsPerPage: 10,
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { data, loading } = useQuery(GET_ALL_JOURNALS, {
-    variables: { currentPageNumber: state.currentPage, limitValue: state.postsPerPage },
+    variables: { currentPageNumber: currentPage, limitValue: 10 },
   });
 
-  console.log(typeof state.postsPerPage);
+  console.log({ data });
 
-  useEffect(() => {
-    dispatch({ type: 'POSTS', payload: data?.getAllJournals });
-  }, [data?.getAllJournals]);
+  // const indexOfLastPost = state.currentPage * state.postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - state.postsPerPage;
+  let journalsOnCurrentPage;
 
-  useEffect(() => {
-    const filteredResults = state.posts.filter(
-      (post) =>
-        post.issn.includes(state.search) ||
-        post.title.toLowerCase().includes(state.search.toLowerCase()),
-    );
-
-    dispatch({ type: 'SEARCH_RESULTS', payload: filteredResults.reverse() });
-  }, [state.posts, state.search]);
-
-  const indexOfLastPost = state.currentPage * state.postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - state.postsPerPage;
-  const currentPost = state.searchResults.slice(indexOfFirstPost, indexOfLastPost);
-  const paginate = (pageNumber) => dispatch({ type: 'CURRENT_PAGE', payload: pageNumber });
+  if (data) {
+    journalsOnCurrentPage = data.getAllJournals.journals;
+  }
 
   if (loading) {
     return <h2>loading...</h2>;
@@ -79,7 +72,7 @@ const JournalList = () => {
         </Search>
       </form>
       <Box>
-        {currentPost.map((blog) => (
+        {journalsOnCurrentPage.map((blog) => (
           <Preview key={blog.id}>
             <Head2 primary>{blog.domainName}</Head2>
             <Link to={`/policy/${blog.issn}`}>
@@ -99,8 +92,8 @@ const JournalList = () => {
           </Preview>
         ))}
         <Pagination
-          postsPerPage={state.postsPerPage}
-          totalPosts={state.posts.length}
+          postsPerPage={10}
+          totalPosts={data.getAllJournals.totalJournals}
           paginate={paginate}
         />
       </Box>
